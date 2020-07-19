@@ -1,0 +1,38 @@
+---
+title: "Programs for Nowcasting"
+author: "Joaquin Salas"
+date: "12 de julio de 2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#In R
+## update files
+EstimateDelaysUpdate.Rmd, updates the observation of confirmed positives by date of onset. Located: E:\\Documents\\informs\\research\\2020.06.05 delays\\code 
+It generates <2ndStage_updated_delays.csv>
+
+#In Matlab
+#Model
+*delay.compoundRateOfChange2* takes <2ndStage_updated_delays.csv> and compute the parameters for the Gamma distributions in the file <GammaParam.csv> and the variable <theta>
+
+## Current infectious number
+*delay.nowcastingCompound* uses the Gamma distributions to update the current estimate for each day producing in the process uncertainty areas around the mean.
+
+## Infectious sequences
+*delay.nowcastingSamples* takes the parameters for the Gamma distributions and generates 1,000 sequences of random number of infectious. The sequences are saved in <infectious_samples.csv>
+
+#In R
+Go back to R and execute the follwing program
+
+## Nowcasting
+Execute the program *estimateRtMexicoNowcasting.Rmd*, in the E:\\Documents\\informs\\research\\2020.05.18 prediction\\code directory. This program will run the *EpiEstim* program to compute $R_t$.
+
+
+```{r cars}
+ 
+ 
+```
+ 
