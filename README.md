@@ -2,7 +2,7 @@
 
 These programs implement a method to generate pausible sequences of confirmed positive COVID-19 infected people. 
 The method describes statistically the day to day variations of updates and predicts what would it be the 
-final count at the end of *D* days.  
+final count at the end of *D* days.  The programs are fine tuned to run with data for Mexico City but could easily customized.
 
 
 # Before you run the programs
@@ -12,7 +12,7 @@ To run the programs you will need the open data set at https://www.gob.mx/salud/
 
 # In R
 ## update files
-*EstimateDelaysUpdate.Rmd*, updates the observation of confirmed positives by date of onset.
+*EstimateDelaysUpdateDF.Rmd*, updates the observation of confirmed positives by date of onset.
 It generates <2ndStage_updated_delays.csv>
 
 # In Matlab
@@ -31,5 +31,5 @@ in the file <GammaParam.csv> and the variable <theta>
 *delay.nowcastingSamples* takes the parameters for the Gamma distributions and generates 1,000 sequences of random number of infectious. The sequences are saved in <infectious_samples.csv>
 
 # In R
-Go back to R and execute the following program. Execute the program *estimateRtMexicoNowcasting.Rmd*. This program will run the *EpiEstim* program to compute $R_t$.
+Go back to R and execute the following program. Execute the program *estimateRtMexicoNowcastingDF.Rmd*. This program will run the *EpiEstim* program to compute $R_t$.
 
