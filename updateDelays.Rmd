@@ -1,0 +1,46 @@
+---
+title: "Update Accumulated Positives for CDMX"
+author: "Joaquín Salas"
+date: "Junio 13, 2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.width=3, fig.height=2)
+```
+
+## Introducción 
+
+Este programa extrae los datos positivos de los  datos de la Secretaría de Salud para todo el país y los ordena por fecha de inicio de los síntomas.  En caso de que haya registros anteriores, actualiza el archivo *updated_delays.csv*. 
+
+
+
+```{r epidemiology}
+
+
+
+
+#directorios de trabajo
+code.dir = 'E:/Documents/informs/research/2020.06.05 delays/code/'
+setwd(code.dir)
+
+
+
+filename = paste(code.dir, "updateDelays.R", sep = "")
+source(filename)
+
+prefix = "DF"
+updateDelays(prefix)
+
+
+prefix = "QT"
+updateDelays(prefix)
+
+
+prefix = "JC"
+updateDelays(prefix)
+
+
+
+```
+
