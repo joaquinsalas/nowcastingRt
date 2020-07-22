@@ -5,19 +5,19 @@
 %compoundRateOfChange2
 %nowcastingCompound(theta)
 %nowcastingSamples(theta)
-classdef delaysDF
+classdef delaysJC
     
     
     properties
         num_max_days= 35 %num max of days to generate data
         masterFile
-        prefix = 'DF';
+        prefix = 'JC';
     end
     
     methods
         
         
-        function obj = delaysDF
+        function obj = delaysJC
             obj.masterFile = sprintf('../data/2ndStage_updated_delays_%s.csv', obj.prefix);
             
             
@@ -454,28 +454,30 @@ classdef delaysDF
                 data = rho(:,t);
                 %data_p = reshape(data,[length(data),1]);
                 indx = find(not(data == Inf) & not(data == 0));
-                phat  = gamfit(data(indx));
-                theta(t-1,:) = phat;
-                x = linspace(min(data(indx)),max(data(indx)),bins);
-                y = gampdf(x,phat(1), phat(2) );
-                y = y/sum(y);
-                
-                if draw == 1
-                    figure(m)
-                    histogram(data,bins, 'Normalization', 'probability')
-                    hold on
-                    scatter(x,y,100,'fill');
-                    plot(x,y,'linewidth',2)
-                    hold off
+                if length(indx) > 30
+                    phat  = gamfit(data(indx));
+                    theta(t-1,:) = phat;
+                    x = linspace(min(data(indx)),max(data(indx)),bins);
+                    y = gampdf(x,phat(1), phat(2) );
+                    y = y/sum(y);
                     
-                    set(gca, 'FontSize', 16)
-                    xlabel('$\rho$',  'Interpreter','LaTex','FontSize', 16)
-                    ylabel('$p(\rho)$',  'Interpreter','LaTex','FontSize', 16)
-                    cadena = sprintf('$t$ = %d', t);
-                    title(cadena,  'Interpreter','LaTex','FontSize', 16)
-                    filename = sprintf('../figures/20200715-%03d%s.png', t,obj.prefix);
-                    saveas(gcf, filename);
-                    m = m + 1;
+                    if draw == 1
+                        figure(m)
+                        histogram(data,bins, 'Normalization', 'probability')
+                        hold on
+                        scatter(x,y,100,'fill');
+                        plot(x,y,'linewidth',2)
+                        hold off
+                        
+                        set(gca, 'FontSize', 16)
+                        xlabel('$\rho$',  'Interpreter','LaTex','FontSize', 16)
+                        ylabel('$p(\rho)$',  'Interpreter','LaTex','FontSize', 16)
+                        cadena = sprintf('$t$ = %d', t);
+                        title(cadena,  'Interpreter','LaTex','FontSize', 16)
+                        filename = sprintf('../figures/20200715-%03d%s.png', t,obj.prefix);
+                        saveas(gcf, filename);
+                        m = m + 1;
+                    end
                 end
             end
             %https://www.mathworks.com/matlabcentral/answers/467038-how-to-add-headers-to-excel
@@ -483,7 +485,8 @@ classdef delaysDF
             c_theta = cell(size(theta,1)+1, size(theta,2));
             c_theta(1,:) = header;
             c_theta(2:size(theta,1)+1,:) = num2cell(theta);
-            filename = sprintf('../data/GammaParam%s.csv',obj.prefix);
+            
+            filename = sprintf('../data/GammaParam%s.csv', obj.prefix);
             csvwrite(filename, theta);
             
             
@@ -834,8 +837,6 @@ classdef delaysDF
             c_Q(2:size(Q,1)+1, 2:size(Q,2)+1) = num2cell(Q);
             axis([0,135,0,3e4])
             filename = sprintf('../data/infectious_samples%s.xlsx', obj.prefix);
-            
-            
             xlswrite(filename, c_Q)
             
             
@@ -1098,7 +1099,7 @@ classdef delaysDF
         
         
         
-        %estimates the models for the corresponding state using a set of routines
+                %estimates the models for the corresponding state using a set of routines
         %common to all states. Should be easier to debug.
         function    theta = compoundRateOfChange3(obj, draw)
             c = crcCommon;
@@ -1106,17 +1107,18 @@ classdef delaysDF
         end
         
         
-        function nowcastingCompound2(obj, theta, offset)
+        function nowcastingCompound2(obj, theta,offset)
             c = crcCommon;
-            c.nowcasting(obj.masterFile, theta, offset);
-            
+            c.nowcasting(obj.masterFile, theta,offset);
+
         end
         
-        function nowcastingSamples2(obj, theta, offset)
+        function nowcastingSamples2(obj, theta,offset)
             c = crcCommon;
             c.sampling(obj.masterFile, obj.prefix, theta,offset);
-            
+  
         end
+        
         
         
         
@@ -1128,9 +1130,9 @@ classdef delaysDF
             
             %read mat variable and save it to csv
             %obj.saveCSV();
-            offset = 3;
+            offset = 0;
             theta = obj.compoundRateOfChange3(0);
-            obj.nowcastingCompound2(theta, offset);
+            obj.nowcastingCompound2(theta,offset);
             obj.nowcastingSamples2(theta,offset);
             
             

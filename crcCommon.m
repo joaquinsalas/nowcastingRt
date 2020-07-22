@@ -143,7 +143,7 @@ classdef crcCommon
         
         
         %obtain samples for the current situation
-        function sampling(obj, datafilename, prefix, theta)
+        function sampling(obj, datafilename, prefix, theta,offset)
             [num, txt, raw] = xlsread(datafilename);
             
             %n_rows: number of days for covid
@@ -162,7 +162,7 @@ classdef crcCommon
             end
             n = k;
             m = 1;
-            for i=k:(n_rows)
+            for i=k:(n_rows-offset)
                 %disp([i,n_rows, size(num,2) - n+1])
                 %disp(t)
                 v = num(i, m:end);
@@ -228,7 +228,7 @@ classdef crcCommon
         
         
         
-        function nowcasting(obj, datafilename, theta)
+        function nowcasting(obj, datafilename, theta, offset)
             [num, txt, raw] = xlsread(datafilename);
             
             %n_rows: number of days for covid
@@ -241,7 +241,7 @@ classdef crcCommon
             
             C = max(num,[],2);
             m = 1; n = 1;
-            for i=k:(n_rows)
+            for i=k:(n_rows-offset)
                 %disp([i,k])
                 %disp(t)
                 v = num(i, m:end);
