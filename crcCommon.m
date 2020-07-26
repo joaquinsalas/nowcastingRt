@@ -240,7 +240,7 @@ classdef crcCommon
         
         
         
-        function nowcasting(obj, datafilename, theta, offset)
+        function nowcasting(obj, datafilename, theta, offset, prefix)
             [num, txt, raw] = xlsread(datafilename);
             
             %n_rows: number of days for covid
@@ -297,6 +297,24 @@ classdef crcCommon
             ylabel('confirmed positives',  'Interpreter','LaTex','FontSize', 16)
             axis([0,n_rows+1,0,max(lim_sup)])
             
+            
+            header = {'fecha','r0.025', 'mean', 'r0.975'}; %dummy header
+            %for t=1:n_samples
+            %    num = num2str(t);
+            %    header{t} = num;
+            %end
+            c_Q = cell(size(Q,1)+1, size(Q,2));
+            c_Q(1,1:end) = header;
+            c_Q(2:(length(tiempo)+1),1) = txt(tiempo+1,1);
+            c_Q(2:size(Q,1)+1, 2:size(Q,2)) = num2cell(Q(:,2:end));
+            %axis([0,135,0,3e4])
+            
+            filename = sprintf('../data/nowcasting%s.xlsx', prefix);
+            if exist(filename, 'file');
+                delete(filename);
+            end
+            
+            xlswrite(filename, c_Q)
             
             
         end

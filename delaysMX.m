@@ -1107,9 +1107,9 @@ classdef delaysMX
         end
         
         
-        function nowcastingCompound2(obj, masterFile, theta, offset)
+        function nowcastingCompound2(obj, masterFile, prefix, theta, offset)
             c = crcCommon;
-            c.nowcasting(masterFile, theta, offset);
+            c.nowcasting(masterFile, theta, offset,prefix);
             
         end
         
@@ -1129,20 +1129,8 @@ classdef delaysMX
             
             %read mat variable and save it to csv
             %obj.saveCSV();
-            offset = 0*ones(1,32);
-            offset(2) = 5;
-            offset(5) = 5;
-            offset(7) = 5;
-            offset(9) = 5;
-            offset(14) = 5;
-            offset(15) = 5;
-            offset(16) = 5;
-            offset(19) = 5;
-            offset(20) = 5;
-            offset(22) = 5;
-            offset(23) = 5;
-            offset(24) = 5;
-            offset(29) = 5;
+            offset = 5*ones(1,32);
+            
             for i=1:length(obj.prefixes)
                 
                 obj.masterFile = sprintf('../data/updated_delays_%s.csv', obj.prefixes{i});
@@ -1153,7 +1141,7 @@ classdef delaysMX
                 if not(isempty(theta)) 
                     disp(i)
                     disp(obj.prefixes{i})
-                    obj.nowcastingCompound2(obj.masterFile, theta, offset(i));
+                    obj.nowcastingCompound2(obj.masterFile, obj.prefixes{i}, theta, offset(i));
                     obj.nowcastingSamples2(obj.masterFile, obj.prefixes{i},theta,offset(i));
                 end
             end
