@@ -9,9 +9,9 @@ suppressMessages(library(tidyverse)) #stringr
 updateDelays <- function (prefix) { 
   
   #directorios de trabajo
-  code.dir = 'E:/Documents/informs/research/2020.06.05 delays/code/'
+  code.dir = 'E:/Documents/informs/research/2020.07.26 nowcastingRt/code/'
   setwd(code.dir)
-  data.dir = 'E:/Documents/informs/research/2020.06.05 delays/data/'
+  data.dir = 'E:/Documents/informs/research/2020.07.26 nowcastingRt/data/'
   
   #directorios con datos o codigo comunes
   common.data.dir = 'E:\\Documents\\informs\\research\\covid-common\\data\\'
@@ -46,7 +46,7 @@ updateDelays <- function (prefix) {
   
   #este archivo contiene los datos mas actualizados de positivos
   master.filename = paste("updated_delays_",prefix,".csv", sep = "")
-  master.filename.2ndStage = paste("2ndStage_updated_delays_",prefix,".csv", sep = "")
+ 
   filename = paste(data.dir,master.filename , sep = "")
   
   #existe el archivo de observaciones acumuladas
@@ -148,14 +148,9 @@ updateDelays <- function (prefix) {
     names(positives) = col.names[2:length(col.names)]
     rownames(positives) = dates
     #save csv file
-    filename = paste(data.dir,master.filename.2ndStage, sep = "")
+    filename = paste(data.dir,master.filename, sep = "")
     write.csv(positives, filename)
     
-    # copy the 2nd stage file to the first stage file
-    if (file.exists(master.filename)) {
-      file.delete(master.file)
-    }
-    file.copy(master.filename.2ndStage, master.filename,overwrite = TRUE)
     
   } else {
     
@@ -218,9 +213,6 @@ updateDelays <- function (prefix) {
     filename = paste(data.dir,master.filename , sep = "")
     write.csv(df, filename)
     
-    #save csv file
-    filename = paste(data.dir,master.filename.2ndStage, sep = "")
-    write.csv(df, filename)
     
   }
   
