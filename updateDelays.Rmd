@@ -21,9 +21,9 @@ Este programa extrae los datos positivos de los  datos de la Secretaría de Salu
 
 
 #directorios de trabajo
-code.dir = 'E:/Documents/informs/research/2020.06.05 delays/code/'
+code.dir = 'E:/Documents/informs/research/2020.07.26 nowcastingRt/code/'
 setwd(code.dir)
-
+common.data = 'E:\\Documents\\informs\\research\\covid-common\\'
 
 
 filename = paste(code.dir, "updateDelays.R", sep = "")

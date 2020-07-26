@@ -1,4 +1,4 @@
-classdef crcCommonReview
+classdef crcCommon
     
     
     properties
@@ -25,21 +25,27 @@ classdef crcCommonReview
             V = []; %total confirmed positives
             m = 1;
             valid = 1;
-            figure(1000)
-            clf
-            hold on
+            if draw == 1
+                figure(1000)
+                clf
+                hold on
+            end
             for i=k:dk %range of interest
                 %disp([i,k])
                 %disp(t)
                 v = num(i, m:end);
-                plot(v,'linewidth',2)
+                if draw == 1
+                    plot(v,'linewidth',2)
+                end
                 if max(v) > num_cases_per_day
                     V(valid,1:length(v)) =  v;
                     valid = valid + 1;
                 end
                 m = m + 1;
             end
-            hold off
+            if draw == 1
+                hold off
+            end
             
             if not(isempty(V))
                 %completa el maximo para las lecturas inexistentes, aquellas

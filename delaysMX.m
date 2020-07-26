@@ -1102,19 +1102,19 @@ classdef delaysMX
         %estimates the models for the corresponding state using a set of routines
         %common to all states. Should be easier to debug.
         function    theta = compoundRateOfChange3(obj,masterFile, prefix, draw)
-            c = crcCommonReview;
+            c = crcCommon;
             theta = c.crc(masterFile, prefix, draw);
         end
         
         
         function nowcastingCompound2(obj, masterFile, theta, offset)
-            c = crcCommonReview;
+            c = crcCommon;
             c.nowcasting(masterFile, theta, offset);
             
         end
         
         function nowcastingSamples2(obj, masterFile, prefix, theta, offset)
-            c = crcCommonReview;
+            c = crcCommon;
             c.sampling(masterFile, prefix, theta,offset);
             
         end
@@ -1145,7 +1145,7 @@ classdef delaysMX
             offset(29) = 5;
             for i=1:length(obj.prefixes)
                 
-                obj.masterFile = sprintf('../data/2ndStage_updated_delays_%s.csv', obj.prefixes{i});
+                obj.masterFile = sprintf('../data/updated_delays_%s.csv', obj.prefixes{i});
             
                  
                 disp(obj.masterFile)

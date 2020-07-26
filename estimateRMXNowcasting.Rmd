@@ -49,9 +49,9 @@ library(xlsx)
 
 
 #directorios de trabajo
-code.dir = 'E:/Documents/informs/research/2020.06.05 delays/code/'
+code.dir = 'E:/Documents/informs/research/2020.07.26 nowcastingRt/code/'
 setwd(code.dir)
-data.dir = 'E:/Documents/informs/research/2020.06.05 delays/data/'
+data.dir = 'E:/Documents/informs/research/2020.07.26 nowcastingRt/data/'
 
 
 #directorios con datos o codigo comunes
@@ -96,7 +96,7 @@ estados = read.csv(filename)
 
 
 
-for (state in seq(1,32)) {
+for (state in seq(1,1)) {
   
   #for the states of Mexico
   #unique.states = sort(unique(covid.pos$ENTIDAD_RES))
