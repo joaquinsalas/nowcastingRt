@@ -1,6 +1,6 @@
 # NowcastingRt
 
-These programs implement a method to estimate $R_t$, the basic reproduction number. In our approach, we generate pausible sequences of confirmed positive COVID-19 infected people and then employ *EpiEstim*, a public available software library, to compute $R_t$. 
+These programs implement a method to estimate *R<sub>t</sub>*, the basic reproduction number. In our approach, we generate pausible sequences of confirmed positive COVID-19 infected people and then employ *EpiEstim*, a public available software library, to compute *R<sub>t</sub>*. 
 Our method to generate sequences describes statistically the day to day variations of updates and predicts what would it be the 
 final count at the end of *D* days, for *D* large.  The programs are fine tuned to run with data for states in Mexico, one ones with enough data to meet the learning stage requirements. In other countries, there may be the need to find the appropriate fields in the available datasets.
 
@@ -29,5 +29,5 @@ in the file <GammaParam*.csv> for each state in Mexico for which the learning re
 Using the parameters for the Gamma distributions and generates 1,000 sequences of random number of infectious. The sequences are saved in <infectious_samples*.csv>
 
 # In R
-Go back to R and execute the program *estimateRMXNowcasting.Rmd*. These programs will use the plausible infectious sequences and run Cori et al. (2013) library  *EpiEstim*  to compute $R_t$. The resulting estimate for $R_t$ will correspond to the mean and one standard deviation.
+Go back to R and execute the program *estimateRMXNowcasting.Rmd*. These programs will use the plausible infectious sequences and run Cori et al. (2013) library  *EpiEstim*  to compute *R<sub>t</sub>*. The resulting estimate for *R<sub>t</sub>* will correspond to the mean and one standard deviation.
 
