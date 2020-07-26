@@ -13,7 +13,7 @@ To run the programs you will need the open datasets at https://www.gob.mx/salud/
 # In R
 ## update files
 *updateDelays.Rmd*, updates the observation of confirmed positives by date of onset.
-It generates in a first iteration <updated_delays*.csv> and <2ndStage_updated_delays*.csv> in a second one, one for each state of Mexico under analysis. 
+It generates <updated_delays*.csv>, one for each state of Mexico under analysis. 
 
 # In Matlab
 
