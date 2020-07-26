@@ -1,4 +1,4 @@
-# NowcastingRt
+# Nowcasting *R<sub>t</sub>*
 
 These programs implement a method to estimate *R<sub>t</sub>*, the basic reproduction number. In our approach, we generate pausible sequences of confirmed positive COVID-19 infected people and then employ *EpiEstim*, a public available software library, to compute *R<sub>t</sub>*. 
 Our method to generate sequences describes statistically the day to day variations of updates and predicts what would it be the 
