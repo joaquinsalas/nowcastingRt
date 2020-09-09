@@ -1,8 +1,8 @@
 # Nowcasting *R<sub>t</sub>*
 
-These programs implement a method to estimate *R<sub>t</sub>*, the basic reproduction number. In our approach, we generate pausible sequences of confirmed positive COVID-19 infected people and then employ *EpiEstim*, a public available software library, to compute *R<sub>t</sub>*. 
-Our method to generate sequences describes statistically the day to day variations of updates and predicts what would it be the 
-final count at the end of *D* days, for *D* large.  The programs are fine tuned to run with data for states in Mexico, one ones with enough data to meet the learning stage requirements. In other countries, there may be the need to find the appropriate fields in the available datasets.
+These programs implement a method to estimate *R<sub>t</sub>*, the basic reproduction number. In our approach, we generate pausible sequences of positive COVID-19 casesand then employ *EpiEstim*, a public available software library, to compute *R<sub>t</sub>*. 
+Our method to generate sequences describes statistically the day to day variations of updates and predicts the 
+final count at the end of *D* days, for a large *D*.  The programs are fine tuned to run with data of states in Mexico, those with enough data to meet the learning stage requirements. In other countries, there may be the need to find the appropriate fields in the available datasets.
 
 
 # Before you run the programs
