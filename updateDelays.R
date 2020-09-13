@@ -8,6 +8,7 @@ suppressMessages(library(tidyverse)) #stringr
 
 updateDelays <- function (prefix) { 
   
+  
   #directorios de trabajo
   code.dir = 'E:/Documents/informs/research/2020.07.26 nowcastingRt/code/'
   setwd(code.dir)
@@ -15,12 +16,11 @@ updateDelays <- function (prefix) {
   
   #directorios con datos o codigo comunes
   common.data.dir = 'E:\\Documents\\informs\\research\\covid-common\\data\\'
-  common.code.dir = 'E:\\Documents\\informs\\research\\covid-common\\code\\'
   common.data = 'E:\\Documents\\informs\\research\\covid-common\\'
   
   
   #archivos auxiliares para leer datos
-  filename = paste(common.code.dir, "readData.R", sep = "")
+  filename = paste(code.dir, "readData.R", sep = "")
   source(filename)
   
   
@@ -36,7 +36,6 @@ updateDelays <- function (prefix) {
   #print(droplevels(nombre))
   
   #clave.entidad = estados$CLAVE[(estados$ENTIDAD_FEDERATIVA %in% nombre)]
-  
   
   
   #files in the data.dir directory corresponding to the Health Ministery data
@@ -93,9 +92,13 @@ updateDelays <- function (prefix) {
                     to = last.date.current, by= "day")
         num.dates = length(dates) 
         
-        #filter in the positives
-        covid.pos = covid[covid$RESULTADO==1 & covid$ENTIDAD_RES==clave.entidad,]
-        
+        if (prefix == "MX") {
+          #filter in the positives
+          covid.pos = covid[covid$RESULTADO==1,]
+        } else {
+          #filter in the positives
+          covid.pos = covid[covid$RESULTADO==1 & covid$ENTIDAD_RES==clave.entidad,]
+        }
         #initially the dates will have zero cases
         count = matrix(0, nrow=num.dates, ncol=1)
         i = 1
@@ -111,13 +114,13 @@ updateDelays <- function (prefix) {
         if (r.count > r.positives) {
           diff = r.count - r.positives
           #init a vector with zeros
-          v = matrix(0,nrow=1, ncol = ncol(pos.matrix))
+          v = matrix(0,nrow=diff, ncol = ncol(pos.matrix))
           #add it to the accumulated
           pos.matrix= rbind(pos.matrix,v)
         }
         
         #add the new column
-        pos.matrix= cbind(pos.matrix, count)
+        pos.matrix= cbind(pos.matrix, count) #2020.09.11 check this
         
         
         
@@ -154,22 +157,19 @@ updateDelays <- function (prefix) {
     
   } else {
     
-    
-    
-    
     #read the last file 
     filename = paste(common.data.dir,files[length(files)] , sep = "")
     covid.last = readData(filename)
     
-    last.date = max(covid.last$FECHA_SINTOMAS)
+    last.date = max(covid.last$FECHA_SINTOMAS) #ultima fecha reportada en el ultimo reporte
     
     
     dates = seq(from = as.Date("2020-02-28"), 
-                to = last.date, by= "day")
+                to = last.date, by= "day")   #secuencia de fechas de la infeccion
     
     num.dates = length(dates)  
     
-    current.date = as.Date("2020-04-12")
+    current.date = as.Date("2020-04-12") #first day of reports
     j = 1
     #visit all the files
     for (file in files) {
@@ -180,8 +180,18 @@ updateDelays <- function (prefix) {
       filename = paste(common.data.dir,file, sep = "")
       covid = readData(filename)
       
-      #filter in the positives
-      covid.pos = covid[covid$RESULTADO==1 & covid$ENTIDAD_RES==clave.entidad,]
+      if (prefix == "MX") {
+        #filter in the positives
+        covid.pos = covid[covid$RESULTADO==1,]
+      } else {
+        #filter in the positives
+        covid.pos = covid[covid$RESULTADO==1 & covid$ENTIDAD_RES==clave.entidad,]
+        
+        
+        
+        
+      }
+      
       
       #initially the dates will have zero cases
       count = matrix(0, nrow=num.dates, ncol=1)

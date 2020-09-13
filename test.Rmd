@@ -1,0 +1,42 @@
+---
+title: "test"
+author: "Joaquin Salas"
+date: "3 de septiembre de 2020"
+output:
+  html_document
+---
+
+
+
+```{r setup, echo=FALSE}
+#knitr::opts_chunk$set(echo = TRUE)
+
+#htmltools::img(src = knitr::image_uri(file.path(R.home("doc"), "html", "logo.jpg")), 
+#               alt = 'logo', 
+#               style = 'position:absolute; top:0; right:0; padding:10px;')
+
+htmltools::img(src = knitr::image_uri("ipn-small.jpg"), 
+               alt = 'logo', 
+               style = 'position:absolute; top:0; right:0; padding:10px; width: 110px; height: 128px') # Added width and height as CSS
+
+
+
+
+
+#knitr::include_graphics("E:/Documents/informs/research/2020.07.26 nowcastingRt/code/ipn-small.jpg")
+
+#htmltools::img(src = knitr::image_uri(file.path(R.home("doc"), "html", "logo.jpg")), 
+#               alt = 'logo', 
+#               style = 'position:absolute; top:0; right:0; padding:10px;')
+
+#htmltools::img(src = knitr::image_uri(file.path("E:/Documents/informs/research/2020.07.26 nowcastingRt/web", "ipn-small.jpg")), 
+#               alt = 'logo', 
+#               style = 'position:absolute; top:0; right:0; padding:10px;')
+
+ 
+ 
+ 
+ 
+```
+
+ 

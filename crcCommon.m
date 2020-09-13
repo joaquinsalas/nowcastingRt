@@ -18,9 +18,9 @@ classdef crcCommon
             %n_rows: number of days for covid
             %n_cols: number of days with public reports
             [n_rows, n_cols] = size(num);
-            num_cases_per_day = 30; % to be considered, a day has to have more than 30 cases
+            num_cases_per_day = 20; % to be considered, a day has to have more than 30 cases
             k =obj.start_date;
-            dk = n_rows - 31;
+            dk = n_rows - 31; %I assume that 
             %save the observations with about completeness of reports
             V = []; %total confirmed positives
             m = 1;
@@ -60,13 +60,14 @@ classdef crcCommon
                     %fill up the gaps
                     V(i,posicion:end) = maximo;
                 end
-                
-                %            figure(100)
-                %            plot(V','linewidth',2)
-                %            set(gca, 'FontSize', 16)
-                %            xlabel('$t$',  'Interpreter','LaTex','FontSize', 16)
-                %            ylabel('$c_d(t)$',  'Interpreter','LaTex','FontSize', 16)
-                %
+                if draw == 1
+                    figure(100)
+                    plot(V','linewidth',2)
+                    set(gca, 'FontSize', 16)
+                    xlabel('$t$',  'Interpreter','LaTex','FontSize', 16)
+                    ylabel('$c_d(t)$',  'Interpreter','LaTex','FontSize', 16)
+                    
+                end
                 %compute the compound rate of change
                 for t=1:v_rows %day observed, just the first dk days seem to converge
                     now = max(V(t,:));
@@ -78,16 +79,16 @@ classdef crcCommon
                     end
                     
                 end
-                num_sequences_complete = 30;
+                num_sequences_complete = 19;
                 %fit distributions
                 [r_rows, r_cols] = size(rho);
-                m = 1;bins = 40;
+                z = 1; m = 1;bins = 40;
                 for delta=1:r_cols
                     data = rho(:,delta);
                     %data_p = reshape(data,[length(data),1]);
                     indx = find(not(data == Inf) & not(data == 0));
                     %disp(length(indx))
-                    if length(indx)>num_sequences_complete
+                    if length(indx)>= num_sequences_complete
                         
                         phat  = gamfit(data(indx));
                         theta(delta,:) = phat;
@@ -112,8 +113,10 @@ classdef crcCommon
                             saveas(gcf, filename);
                             m = m + 1;
                         end
+                        z = z + 1;
                     end
                 end
+                disp(z)
                 if not(isempty(theta))
                     %https://www.mathworks.com/matlabcentral/answers/467038-how-to-add-headers-to-excel
                     header = {'shape', 'scale'}; %dummy header
@@ -132,7 +135,7 @@ classdef crcCommon
         function [q0_025, q0_5, q0_975] = predict(obj, theta, day, before)
             %disp(day)
             if before > 0
-                phat = theta(day,:);
+                phat = theta(day+1,:); %add one because the indices in matlab
                 a = phat(1); b = phat(2);
                 if a > 0 & b > 0
                     rho = gamrnd(a,b,[1,1000]);
@@ -167,43 +170,43 @@ classdef crcCommon
             %save the observations with about completeness of reports
             Q = zeros(n_rows, n_samples);
             C = max(num,[],2);
+            Q = C * ones(1, n_samples);
             
-            
-            for t=1:n_rows
-                Q(t,:) = C(t);
-            end
             n = k;
             m = 1;
+            %check every day of the infectious between the start of reporting <abril 12> (k days after
+            % february 28) and <offset> days before today
             for t=k:(n_rows-offset)
                 %disp([i,n_rows, size(num,2) - n+1])
                 %disp(t)
                 v = num(t, m:end);
                 %delta = max(find(v == 0));
-                day =  size(num,2) - m+1; %one more because matlab arrays are base one
-                %if delta > 0
-                
-                c = max(v);
-                %day = length(v) - delta;
-                if day < size(theta,1)
+                delta =  size(num,2) - m; %one more because matlab arrays are base one
+                                          %2020.08.12 removed the addition
+                                          %of one. When m == size(num,2),
+                                          %delta must be equal to zero.
+  
+                c = max(v); %it may not be the last day due to dropped cases
+               
+                if delta < size(theta,1)
                     %disp([day, c])
-                    [minimum,media, maximum] = obj.predict(theta, day, c);
+                    %<day> corresponding to today is zero. I add one to <day>
+                    %in predict
+                    [minimum,media, maximum] = obj.predict(theta, delta, c);
                     if not(isinf(minimum))
-                        a = theta(day,1); b = theta(day,2);
+                        a = theta(delta+1,1); b = theta(delta+1,2);
+                        %2020.08.12 added one to delta. I subtracted one a
+                        %few lines above
                         if a > 0 & b > 0
                             r = gamrnd(a,b,[1,1000]);
                             Q(n,:) = floor(c * (1 + r));
                             n = n + 1;
                         end
-                    end
-                    
-                    
+                    end     
                 else
-                    %    Q(i,:) = C(i);
                     n = n + 1;
                 end
-                m = m + 1;
-                %%end
-                % n = n + 1;
+                m = m + 1; 
             end
             Q = Q(1:n-1,:);
             figure(1)
@@ -258,15 +261,22 @@ classdef crcCommon
                 %disp(t)
                 v = num(t, m:end);
                 pos = max(find(v == 0));
-                %day = length(v) - pos;
-                day =  size(num,2) - n+1; %one more because matlab arrays are base one
+                 
+                delta =  size(num,2) - n; %one more because matlab arrays are base one
+                                        %I think adding one more is a mistake,
+                                        %I removed the addition. JSR.
+                                        %2020.07.27
+                                        %2020.08.12 reviewed. When n =
+                                        %size(num,2), then delta must be
+                                        %equal to zero
+                                        
                 
                 c = max(v);
                 
-                if day < size(theta,1)
+                if delta < size(theta,1)
                     %disp([day, c])
-                    [minimum,media, maximum] = obj.predict(theta, day, c);
-                    %disp(maximum - minimum)
+                    [minimum,media, maximum] = obj.predict(theta, delta, c);
+                    %disp([minimum, maximum])
                     if not(isinf(minimum))
                         Q(m,:) = [t, minimum, media, maximum];
                         m = m + 1;
@@ -278,6 +288,7 @@ classdef crcCommon
             clf
             plot(C,'linewidth',2);
             hold on
+            scatter(1:length(C),C,10,'fill');
             tiempo = Q(:,1)'-2;
             lim_inf = Q(:,2)';
             valor_medio = Q(:,3)';
@@ -295,7 +306,7 @@ classdef crcCommon
             set(gca, 'FontSize', 16)
             xlabel('days',  'Interpreter','LaTex','FontSize', 16)
             ylabel('confirmed positives',  'Interpreter','LaTex','FontSize', 16)
-            axis([0,n_rows+1,0,max(lim_sup)])
+            axis([0.75*n_rows,n_rows+1,0,max(lim_sup)])
             
             
             header = {'fecha','r0.025', 'mean', 'r0.975'}; %dummy header

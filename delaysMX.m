@@ -18,10 +18,13 @@ classdef delaysMX
         
         
         function obj = delaysMX
-            obj.prefixes = {'AS','BC','BS','CC','CL','CM','CS','CH','DF',...
-                'DG','GT','GR','HG','JC','MC','MN','MS','NT','NL',...
-                'OC','PL','QT','QR','SP','SL','SR','TC','TS','TL',...
-                'VZ','YN','ZS'}; 
+            obj.prefixes = {'MX','AS','BC','BS','CC','CL',...
+                            'CM','CS','CH','DF','DG',...
+                            'GT','GR','HG','JC','MC',...
+                            'MN','MS','NT','NL','OC',...
+                            'PL','QT','QR','SP','SL',...
+                            'SR','TC','TS','TL','VZ',...
+                            'YN','ZS'}; 
         end
         
         
@@ -253,7 +256,7 @@ classdef delaysMX
             xlabel('days',  'Interpreter','LaTex','FontSize', 16)
             ylabel('rate of change',  'Interpreter','LaTex','FontSize', 16)
             %axis([1,n,0, max(num(:))])
-            axis([0, size(num,2), 0,0.20])
+            %axis([0, size(num,2), 0,0.40])
             
             
             figure(2)
@@ -1129,18 +1132,19 @@ classdef delaysMX
             
             %read mat variable and save it to csv
             %obj.saveCSV();
-            offset = 5*ones(1,32);
+            offset = 5*ones(1,33);
             
             for i=1:length(obj.prefixes)
                 
                 obj.masterFile = sprintf('../data/updated_delays_%s.csv', obj.prefixes{i});
-            
-                 
+                
                 disp(obj.masterFile)
+                %obj.plotDelays();
+                %obj.process();
                 theta = obj.compoundRateOfChange3(obj.masterFile, obj.prefixes{i},0);
                 if not(isempty(theta)) 
-                    disp(i)
-                    disp(obj.prefixes{i})
+                   % disp(i)
+                   % disp(obj.prefixes{i})
                     obj.nowcastingCompound2(obj.masterFile, obj.prefixes{i}, theta, offset(i));
                     obj.nowcastingSamples2(obj.masterFile, obj.prefixes{i},theta,offset(i));
                 end

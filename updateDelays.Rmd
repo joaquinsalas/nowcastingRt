@@ -1,7 +1,7 @@
 ---
 title: "Update Accumulated Positives"
 author: "Joaquín Salas"
-date: "Junio 13, 2020"
+date: "September 12, 2020"
 output: pdf_document
 ---
 
@@ -37,6 +37,13 @@ source(filename)
 filename = paste(common.data, "estados.csv", sep = "")
 estados = read.csv(filename)
 
+#process the whole country
+prefix = "MX"
+
+print(prefix)
+updateDelays(prefix)
+
+
 for (state in seq(1,32)) {
   
    #extract the state name
@@ -45,6 +52,7 @@ for (state in seq(1,32)) {
   print(droplevels(prefix))
   updateDelays(prefix)
 }
+
 
 
 

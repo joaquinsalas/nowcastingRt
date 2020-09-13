@@ -1,0 +1,183 @@
+---
+title: "Número Básico de Reproducción para los Estados en México^[La idea del método aquí presentado fue sugerida por Carlo Tomasi, profesor de la Univesidad de Duke. Correspondencia: Joaquín Salas; jsalasr@ipn.mx, salas@ieee.org; profesor del Instituto Politécnico Nacional; Cerro Blanco 141, Colinas del Cimatario, Querétaro]"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  pdf_document:
+    includes:
+      in_header: mystyle.sty
+bibliography: ref.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.width=3, fig.height=2)
+```
+\begin{multicols}{2}
+%%%%%%%%%%%%
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{c}
+    \includegraphics[width=3in]{../images/solo}\\
+    %[trim=left bottom right top, clip]
+    \includegraphics[trim=0 0 0 800,clip,width=3in]{../images/muchos}\\
+
+
+    \end{tabular}
+    {\caption*{El Número Básico de Reproducción puede ser considerado como la cantidad  esperada de infecciones generadas por un caso. Puede ser utilizado para determinar si debemos establecer medidas de distanciamiento social.}}
+    \label{fig:delay}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%
+
+\section{Introducción}
+
+A medida que aumenta la interacción entre las personas, se materializa la amenaza
+inminente de los brotes de COVID-19, y existe una inclinación a aplicar bloqueos. En este contexto, es esencial tener indicadores fáciles de usar que podamos emplear como  referencia. El número básico de reproducción de positivos confirmados, $R_t$, puede cumplir ese rol. Este documento presenta el resultado de aplicar un enfoque basado en datos para el pronóstico del $R_t$ inmediato basado en el comportamiento estadístico de observaciones anteriores. A medida que llega más información, el método naturalmente se vuelve más preciso sobre el recuento final de positivos confirmados. La fortaleza de nuestro método es que se basa en el inicio de síntomas autoinformados, en contraste con otros métodos que utilizan el recuento diario para inferir $R_t$. Creemos que el empleo de $R_t$  puede ser la base para determinar indicadores útiles de seguimiento de epidemias.
+
+
+\begin{mdframed}[backgroundcolor=hightlightColor,roundcorner=10pt]
+\section*{Sumario}
+
+\begin{itemize}
+\item El número básico de reproducción, $R_t$ representa el número promedio de contagios que una persona infectada realiza. Un valor de $R_t>1$ significa que el número de infectados está creciendo, y se duplicarán en un periodo cuantificable, mientras que un valor de $R_t<1$ significa que el número de infectados tiende disminuir en el tiempo. 
+
+\item Para cada estado, el método modela la distribución de casos reportados en el pasado 
+ para predecir el número de infecciones diarias para cada fecha dentro del periodo de la epidemia. 
+ \item Para generar los estimados de $R_t$, utilizamos los datos hechos públicos por
+ la Secretaría de Salud de México.
+
+
+ 
+\end{itemize}
+\end{mdframed}
+
+ 
+
+
+
+\section{Aproximación}
+El presente trabajo está basado en la  idea de  explotar el patrón de regularidad 
+con la que se actualizan las cifras de confirmados positivos a COVID-19~\cite{salas2020improving}. En nuestra aproximación, construimos funciones de probabilidad que permiten estimar cual será el número de confirmados positivos para un cierto día habiéndose dado actualizaciones para esa misma fecha. Ya con el número estimado de confirmados positivos, se construyen posibles series de evolución del número de confirmados positivos. 
+
+Para la determinación del número básico de reproducción para una de esas series de tiempo, nos basamos en  la librería para {\bf R} (el lenguaje) {\it EpiEstim}, la cual se construye alrededor del trabajo de Cori {\it et al.}~\cite{cori2013new}. Cori {\it et al.} asumieron que la tasa a la que una persona infectada contagia a otras sigue un proceso de Poisson. Enseguida utilizan un proceso de inferencia bayesiano en donde asumen un {\it prior} en la forma de una distribución Gamma, lo cual resulta en un {\it posterior} que también sigue una distribución Gamma.   Siguiendo la recomendación de Cori {\it et al.} solo calculamos $R_t$ cuando el número de casos es mayor a 12 infectados. Además, siguiendo un estudio de periodicidad propio, calculamos $\tau$ como una semana. Finalmente, usando la investigación de Aghaali {\it et al.}~\cite{aghaali2020estimation} asignamos una media de 4.55 y una desviación estándar de 3.30 al {\it prior} Gamma. Notando que la caracterización del intervalo serial varía ampliamente y posiblemente requiera valores que reflejen la dinámica del país~\cite{griffin2020rapid}. 
+La estimación de $R_t$ que proporcionamos tiene la media y desviación estándar en ese momento.
+
+Nuestros resultados  toma en cuenta la transmisión pre-sintomática, {\it i.e.}, el periodo de incubación, o el tiempo que toma a un infectado comenzar a mostrar síntomas, es mayor al periodo latente, o el tiempo a partir del cual un infectado puede contagiar a otros. Siguiendo Bar-On {\it et al.}~\cite{bar2020science} asumimos que el periodo latente dura tres días y el  periodo de incubación cinco días.  
+
+Para cada estado se presentan dos gráficas con datos para los últimos 30 días. En una se muestra la incidencia de casos confirmados positivos, a la cual se le sobrepone el número estimado de casos positivos y la consideración sobre la diferencia entre la duración de los periodos de latencia y de incubación. La segunda gráfica muestra la evolución de $R_t$. Una línea azul indica donde $R_t = 1$. En ambos casos regiones grises delimitan la zona de incertidumbre.  
+
+
+
+\section{Términos y Condiciones}
+Términos y condiciones: Este reporte ha sido elaborado por “el autor” y se proporciona al público estrictamente para la salud pública, la educación, y la investigación académica. El reporte se basa en datos hechos públicos por la Secretaría de Salud de México y código que está disponible en el blog de información: \url{https://tinyurl.com/nowcastRt}. “El autor” declara que no ofrece garantías con respecto al reporte, incluida la precisión, la idoneidad para el uso, y la fiabilidad. Se prohíbe estrictamente confiar en el reporte para obtener orientación médica o usar el reporte para fines comerciales. También se prohíbe estrictamente el uso de este reporte, su información y la documentación puesta a disposición con fines promocionales o comerciales. Consulte la información oficial de la Secretaría de Salud de México en donde expertos ayudan a mejorar la comprensión del virus SARS-CoV-2, informar al público, formular políticas para guiar una respuesta, mejorar la atención y salvar vidas.
+
+
+
+
+\bibliographystyle{plain}
+\bibliography{ref.bib}
+
+\end{multicols}
+
+```{r epidemiology}
+
+library(EpiEstim)
+library(incidence) #incidence object
+library(distcrete) #discretise a pdf
+library(epitrix) #from mu, cv to scale and shape in the Gamma distribution
+library(latex2exp) #include latex
+library(ggplot2) #ggplot
+
+
+library(matrixStats)
+library(readxl)
+library(xlsx)
+
+
+#directorios de trabajo
+code.dir = 'E:/Documents/informs/research/2020.07.26 nowcastingRt/code/'
+setwd(code.dir)
+data.dir = 'E:/Documents/informs/research/2020.07.26 nowcastingRt/data/'
+
+
+#directorios con datos o codigo comunes
+common.data.dir = 'E:\\Documents\\informs\\research\\covid-common\\data\\'
+common.data = 'E:\\Documents\\informs\\research\\covid-common\\'
+
+filename = paste(code.dir, "readData.R", sep = "")
+source(filename)
+
+
+filename = paste(code.dir, "computeRt.R", sep = "")
+source(filename)
+
+
+
+#filename = paste(common.data.dir, files[length(files)], sep = "")
+#covid = readData(filename)
+
+
+
+#############
+#read the data from the last file of cases
+
+#files in the data.dir directory corresponding to the Health Ministery data
+files.pattern = "*COVID19MEXICO.csv"
+files <- list.files(path = common.data.dir, pattern =  files.pattern)
+
+filename = paste(common.data.dir, files[length(files)], sep = "")
+covid = readData(filename)
+
+
+#filter in positives
+covid.pos = covid[covid$RESULTADO==1,]
+
+
+#############
+#read the list of states
+
+filename = paste(common.data, "estados.csv", sep = "")
+estados = read.csv(filename)
+
+
+#for (state in seq(9 ,9)) { #seq(1,32)) {
+
+nombre = "MEXICO_PAIS"
+state = 0
+estimate.data = computeRt(state, covid.pos)
+  
+  if (dim(estimate.data)[1] > 0) {
+    filename = paste(data.dir, nombre, ".csv", sep = "")
+    #print(filename)
+    #print(dim(estimate.data))
+    write.csv(estimate.data, filename)
+  }
+
+  
+ 
+for (state in seq(1 ,32)) { #seq(1,32)) {
+   nombre = estados$ENTIDAD_FEDERATIVA[estados$CLAVE_ENTIDAD == state]
+  
+  #for the states of Mexico
+  #unique.states = sort(unique(covid.pos$ENTIDAD_RES))
+  
+  #for (state in unique.states) {
+  #state = 9 #CDMX
+  
+  
+    
+  estimate.data = computeRt(state, covid.pos)
+  
+  if (dim(estimate.data)[1] > 0) {
+    filename = paste(data.dir, nombre, ".csv", sep = "")
+    #print(filename)
+    #print(dim(estimate.data))
+    write.csv(estimate.data, filename)
+  }
+  
+}
+
+
+
+
+
+```
+
