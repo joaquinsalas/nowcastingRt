@@ -31,3 +31,7 @@ Using the parameters for the Gamma distributions and generates 1,000 sequences o
 # In R
 Go back to R and execute the program *estimateRMXNowcasting.Rmd*. These programs will use the plausible infectious sequences and run Cori et al. (2013) library  *EpiEstim*  to compute *R<sub>t</sub>*. The resulting estimate for *R<sub>t</sub>* will correspond to the mean and one standard deviation.
 
+# Collaborators
+* Dagoberto Pulido
+* Samuel Salas
+* Joaquín Salas
