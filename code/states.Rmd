@@ -27,9 +27,9 @@ suppressMessages(library(zip))
 
 
 #directorios de trabajo
-code.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/code/'
+code.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/code/'
 setwd(code.dir)
-data.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/data/'
+data.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/data/'
 
 
 #directorios con datos o codigo comunes
@@ -81,7 +81,7 @@ covid.pos = covid[covid$RESULTADO==1,]
 #############
 #read the list of states
 
-filename = paste(common.data, "estados.csv", sep = "")
+filename = paste(data.dir, "estados.csv", sep = "")
 estados = read.csv(filename)
 
 prefix = "MX"

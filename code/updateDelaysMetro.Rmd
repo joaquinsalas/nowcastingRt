@@ -50,7 +50,7 @@ zonas.metro = unique(zonas.metro.data$CVE_ZM)
 
 
 
-for (zona.metro in zonas.metro[1]) {
+for (zona.metro in zonas.metro) {
   
   
 
