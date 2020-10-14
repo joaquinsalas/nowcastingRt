@@ -6,17 +6,8 @@ suppressMessages(library(tidyverse)) #stringr
 
 
 
-updateDelays <- function (prefix) { 
+updateDelays <- function (prefix, code.dir, data.dir, common.data.dir) { 
   
-  
-  #directorios de trabajo
-  code.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/code/'
-  setwd(code.dir)
-  data.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/data/'
-  
-  #directorios con datos o codigo comunes
-  common.data.dir = 'E:\\Documents\\informs\\research\\covid-common\\data\\'
-  common.data = 'E:\\Documents\\informs\\research\\covid-common\\'
   
   
   #archivos auxiliares para leer datos
@@ -25,7 +16,7 @@ updateDelays <- function (prefix) {
   
   
   #archivos auxiliares para leer datos
-  filename = paste(common.data, "estados.csv", sep = "")
+  filename = paste(data.dir, "estados.csv", sep = "")
   estados = read.csv(filename)
   
   

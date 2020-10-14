@@ -21,9 +21,12 @@ Este programa extrae los datos positivos de los  datos de la Secretaría de Salu
 
 
 #directorios de trabajo
-code.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/code/'
+code.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/code/'
+data.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/data/'
 setwd(code.dir)
-common.data = 'E:\\Documents\\informs\\research\\covid-common\\'
+common.data.dir = 'E:\\Documents\\informs\\research\\covid-common\\data\\'
+
+
 
 
 filename = paste(code.dir, "updateDelaysMetro.R", sep = "")
@@ -34,7 +37,7 @@ source(filename)
 #############
 #read the list of states
 
-filename = paste(common.data, "zonas_metropolitanas_2015.csv", sep = "")
+filename = paste(data.dir, "zonas_metropolitanas_2015.csv", sep = "")
 zonas.metro.data = read.csv(filename)
 
 #process the whole country
@@ -47,13 +50,13 @@ zonas.metro = unique(zonas.metro.data$CVE_ZM)
 
 
 
-for (zona.metro in zonas.metro) {
+for (zona.metro in zonas.metro[1]) {
   
   
 
   
   print(zona.metro)
-  updateDelaysMetro(zona.metro)
+  updateDelaysMetro(zona.metro, code.dir, data.dir, common.data.dir)
 }
 
 

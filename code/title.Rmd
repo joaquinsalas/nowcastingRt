@@ -5,7 +5,7 @@ output:
 bibliography: ref.bib
 ---
 
-# *R<sub>t</sub>* para COVID-19 en Mexico
+# *R<sub>t</sub>* para COVID-19 en México
 
  
 
@@ -17,7 +17,7 @@ bibliography: ref.bib
 #
 
 #directorios de trabajo
-code.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/code/'
+code.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/code/'
 setwd(code.dir)
 
 

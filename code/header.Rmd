@@ -10,7 +10,7 @@ bibliography: ref.bib
 
 
 #directorios de trabajo
-code.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/code/'
+code.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/code/'
 setwd(code.dir)
 
 

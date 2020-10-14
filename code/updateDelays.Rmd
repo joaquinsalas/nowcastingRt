@@ -21,9 +21,13 @@ Este programa extrae los datos positivos de los  datos de la Secretaría de Salu
 
 
 #directorios de trabajo
-code.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/code/'
+code.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/code/'
+data.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/data/'
 setwd(code.dir)
-common.data = 'E:\\Documents\\informs\\research\\covid-common\\'
+
+#directorios con datos o codigo comunes
+common.data.dir = 'E:\\Documents\\informs\\research\\covid-common\\data\\'
+ 
 
 
 filename = paste(code.dir, "updateDelays.R", sep = "")
@@ -34,14 +38,14 @@ source(filename)
 #############
 #read the list of states
 
-filename = paste(common.data, "estados.csv", sep = "")
+filename = paste(data.dir, "estados.csv", sep = "")
 estados = read.csv(filename)
 
 #process the whole country
 prefix = "MX"
 
 print(prefix)
-updateDelays(prefix)
+updateDelays(prefix, code.dir, data.dir, common.data.dir)
 
 
 for (state in seq(1,32)) {
@@ -50,7 +54,7 @@ for (state in seq(1,32)) {
   prefix = estados$ABREVIATURA[estados$CLAVE_ENTIDAD == state]
   
   print(droplevels(prefix))
-  updateDelays(prefix)
+  updateDelays(prefix, code.dir, data.dir, common.data.dir)
 }
 
 

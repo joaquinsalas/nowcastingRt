@@ -6,16 +6,11 @@ suppressMessages(library(tidyverse)) #stringr
 
 
 
-updateDelaysMetro <- function (zona.metro) { 
+updateDelaysMetro <- function (zona.metro, code.dir, data.dir, common.data.dir) { 
   
   
-  #directorios de trabajo
-  code.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/code/'
-  setwd(code.dir)
-  data.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/data/'
-  
+
   #directorios con datos o codigo comunes
-  common.data.dir = 'E:\\Documents\\informs\\research\\covid-common\\data\\'
   common.data = 'E:\\Documents\\informs\\research\\covid-common\\'
   
   
@@ -25,7 +20,7 @@ updateDelaysMetro <- function (zona.metro) {
   
   
   #archivos auxiliares para leer datos
-  filename = paste(common.data, "zonas_metropolitanas_2015.csv", sep = "")
+  filename = paste(data.dir, "zonas_metropolitanas_2015.csv", sep = "")
   zonas.metro.data = read.csv(filename)
   
   #extract the state name
