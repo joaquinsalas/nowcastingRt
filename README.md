@@ -10,9 +10,25 @@ Update the directories in the .Rmd and .m files. Currently, they point to direct
 To run the programs you will need the open datasets at https://www.gob.mx/salud/documentos/datos-abiertos-bases-historicas-direccion-general-de-epidemiologia. They are provided by the Mexican Health Ministery.
 
 # In R
+## create html files
+Run the programs
+* header.Rmd
+* title.Rmd
+* conclusion.Rmd
+
+They will generate html files useful to visualize the results. You will only need to run these programs once.
+
 ## update files
-Run *updateDelays.Rmd*, whcih updates the observation of confirmed positives by date of onset.
-It generates <updated_delays*.csv>, one for each state of Mexico under analysis. 
+Update the directories within the files to point to your local source of data!
+
+I pre-process the data provided by the Mexican goverment. It may take several days of preprocessing the whole dataset for the states and metropolitan areas. For instance, when I started pre-processing the dataset to generate nowcasting for metropolitan areas, I had to extract information from Abril 12 to September 15, 2020. It took my computer 50 hours. The files currently on githup contain the pre-processed datasets until October 14, 2020. If you find these programs useful, I may share more up to date files with you. Please send me a note.
+
+* Run *updateDelays.Rmd*, which updates the observation of confirmed positives by date of onset.
+It generates <updated_delays*.csv>, one for each state under analysis in Mexico . 
+
+* Run *updateDelaysMetro.Rmd*, which updates the observation of confirmed positives by date of onset.
+It generates <updated_delays*.csv>, one for each metropolitan area under analysis in Mexico. 
+
 
 # In Matlab
 
