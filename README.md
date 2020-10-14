@@ -18,6 +18,8 @@ Run the programs
 
 They will generate html files useful to visualize the results. You will only need to run these programs once.
 
+Run the program *date.Rmd* to update the date and time for the report.
+
 ## update files
 Update the directories within the files to point to your local source of data!
 
@@ -32,19 +34,29 @@ It generates <updated_delays*.csv>, one for each metropolitan area under analysi
 
 # In Matlab
 
-Create an object using an operation such as delay = delayMX and run delay.runme
+Create an object using an operation such as delay = delaysMX2 and run delay.runme
 
 The program will generate the following outputs:
 
-* Models. The parameters for the Gamma distributions
-in the file <GammaParam*.csv> for each state in Mexico for which the learning requirements were met.
+* Models. The data describing the distributions for the compound rate of change 
+in the file <NoParam*.csv> for each state in Mexico for which the learning requirements were met.
 
 
 * Infectious sequences. 
 Using the parameters for the Gamma distributions and generates 1,000 sequences of random number of infectious. The sequences are saved in <infectious_samples*.csv>
 
+In the case of metropolis, perform the same operation using delay = delaysMetro2, followed by delay.runme
+
 # In R
-Go back to R and execute the program *estimateRMXNowcasting.Rmd*. These programs will use the plausible infectious sequences and run Cori et al. (2013) library  *EpiEstim*  to compute *R<sub>t</sub>*. The resulting estimate for *R<sub>t</sub>* will correspond to the mean and one standard deviation.
+Go back to R and execute the programs *states.Rmd* and *metro.Rmd*. These programs will use the plausible infectious sequences and run Cori et al. (2013) library  *EpiEstim*  to compute *R<sub>t</sub>*. The resulting estimate for *R<sub>t</sub>* will correspond to the mean and one standard deviation.
+
+# Programs output
+The programs will generate html files that you may run on a browser. Start with index.html. Also, the programs generate a couple of zip files, estados.zip and metropolis.zip, which contain the csv files appearing in the figures.
+
+# batch files
+A possible short-cut to the previous process may be to employ the batch files estimateRtStates.bat, followed by estimateRtStates2.bat for states and estimateRtMetro.bat, followed by estimateRtMetro2.bat for metropolitan areas.
+
+Watch out for the sound emitted by emitSound.m!
 
 # Collaborators
 * Dagoberto Pulido
