@@ -1,0 +1,137 @@
+---
+title: "Número Efectivo de Reproducción en México"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_fragment
+bibliography: ref.bib
+---
+
+```{r setup, echo=FALSE}
+
+knitr::opts_chunk$set(echo = FALSE,   fig.height=1)
+
+
+
+library(EpiEstim)
+library(incidence) #incidence object
+library(distcrete) #discretise a pdf
+library(epitrix) #from mu, cv to scale and shape in the Gamma distribution
+library(latex2exp) #include latex
+library(ggplot2) #ggplot
+
+
+library(matrixStats)
+library(readxl)
+library(xlsx)
+suppressMessages(library(zip))
+
+
+#directorios de trabajo
+code.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/code/'
+setwd(code.dir)
+data.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/data/'
+
+
+#directorios con datos o codigo comunes
+common.data.dir = 'E:\\Documents\\informs\\research\\covid-common\\data\\'
+
+common.data = 'E:\\Documents\\informs\\research\\covid-common\\'
+
+filename = paste(code.dir, "readData.R", sep = "")
+source(filename)
+
+filename = paste(code.dir, "updateErrorEvaluation.R", sep = "")
+source(filename)
+
+
+filename = paste(code.dir, "computeRt.R", sep = "")
+source(filename)
+
+
+
+#filename = paste(common.data.dir, files[length(files)], sep = "")
+#covid = readData(filename)
+
+
+
+#############
+#read the data from the last file of cases
+
+#files in the data.dir directory corresponding to the Health Ministery data
+files.pattern = "*COVID19MEXICO.csv"
+files <- list.files(path = common.data.dir, pattern =  files.pattern)
+
+filename = paste(common.data.dir, files[length(files)], sep = "")
+covid = readData(filename)
+
+
+#filter in positives
+covid.pos = covid[covid$RESULTADO==1,]
+
+```
+ 	
+```{r figures, fig.height=2.66, fig.width=4}
+
+
+
+#figures size in ggplot
+#  options(repr.plot.width = 1)
+  
+  
+#############
+#read the list of states
+
+filename = paste(common.data, "estados.csv", sep = "")
+estados = read.csv(filename)
+
+prefix = "MX"
+nombre = "MEXICO_PAIS"
+state = 0
+estimate.data = computeRt(state, covid.pos)
+
+#init variable
+files.zip = ""
+
+if (dim(estimate.data)[1] > 0) {
+  filename = paste(data.dir, prefix, ".csv", sep = "")
+  write.csv(estimate.data, filename)
+  updateErrorEvaluation(state, estimate.data)
+  files.zip[1] = filename
+}
+
+if (TRUE) { 
+  
+  for (state in seq(1 ,32)) { #seq(1,32)) {
+    nombre = estados$ENTIDAD_FEDERATIVA[estados$CLAVE_ENTIDAD == state]
+    prefix = estados$ABREVIATURA[estados$CLAVE_ENTIDAD == state]
+    
+    
+    estimate.data = computeRt(state, covid.pos)
+    
+    if (dim(estimate.data)[1] > 0) {
+      filename = paste(data.dir, prefix, ".csv", sep = "")
+      #print(filename)
+      #print(dim(estimate.data))
+      write.csv(estimate.data, filename)
+      
+      #update error value
+      updateErrorEvaluation(state, estimate.data)
+      files.zip[length(files.zip)+1]= filename
+      
+      
+    }
+    
+  }
+  
+}
+
+zipr(zipfile = '../data/estados.zip', files = files.zip, include_directories = FALSE)
+
+
+
+
+
+```
+
+```{r terms}
+

@@ -1,0 +1,45 @@
+---
+title: "Número Efectivo de Reproducción en México"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_fragment
+bibliography: ref.bib
+---
+
+```{r setup, echo=FALSE}
+
+
+#directorios de trabajo
+code.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/code/'
+setwd(code.dir)
+
+
+```
+
+
+*  El número efectivo de reproducción, *R<sub>t</sub>* representa el número promedio de contagios que una persona infectada realiza. Un valor de *R<sub>t</sub>>1* significa que el número de infectados está creciendo, y se duplicará en un periodo cuantificable, mientras que un valor de *R<sub>t</sub><1* significa que el número de infectados tiende disminuir en el tiempo. 
+
+*  Para cada Estado y Zona Metropolitana, el método modela la distribución de casos reportados para predecir el número de infecciones que habrá para una cada fecha dentro del periodo de la epidemia.
+
+
+
+*  Para generar los estimados de *R<sub>t</sub>*, utilizamos los datos hechos públicos por
+la Secretaría de Salud de México.
+
+
+![](../images/solo.jpg){height=2in}
+![](../images/muchos_s.jpg){height=2in}
+
+
+
+
+
+
+
+
+
+
+
+```{r epidemiology}
+
+ 
