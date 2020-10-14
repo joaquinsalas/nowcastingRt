@@ -1,0 +1,64 @@
+---
+title: "Número Efectivo de Reproducción en México"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_fragment
+bibliography: ref.bib
+---
+
+```{r setup, echo=FALSE}
+
+knitr::opts_chunk$set(echo = FALSE, fig.width=3, fig.height=2)
+
+```
+
+```{r epidemiology}
+
+
+
+```
+## Introducción
+
+A medida que aumenta la interacción entre las personas, se materializa la amenaza
+inminente de los brotes de COVID-19, y existe una inclinación a aplicar bloqueos. En este contexto, es esencial tener indicadores fáciles de usar que podamos emplear como  referencia. El número efectivo de reproducción de positivos confirmados, *R<sub>t</sub>*, puede cumplir ese rol. Este documento presenta el resultado de aplicar un enfoque basado en datos para el pronóstico del *R<sub>t</sub>* inmediato basado en el comportamiento estadístico de observaciones anteriores. A medida que llega más información, el método naturalmente se vuelve más preciso sobre el recuento final de positivos confirmados. La fortaleza de nuestro método es que se basa en el inicio de síntomas autoinformados, en contraste con otros métodos que utilizan el recuento diario para inferir *R<sub>t</sub>*. Creemos que el empleo de *R<sub>t</sub>*  puede ser la base para determinar indicadores útiles de seguimiento de epidemias.
+
+
+
+
+
+
+
+
+
+
+
+
+## Aproximación
+El presente trabajo está basado en la  idea de  explotar el patrón de regularidad 
+con la que se actualizan las cifras de confirmados positivos a COVID-19 [@salas2020improving]. En nuestra aproximación, construimos funciones de probabilidad que permiten estimar cual será el número de confirmados positivos para un cierto día habiéndose dado actualizaciones para esa misma fecha. Ya con el número estimado de confirmados positivos, se construyen posibles series de evolución del número de confirmados positivos. 
+
+Para la determinación del número efectivo de reproducción para una de esas series de tiempo, nos basamos en  la librería para **R** (el lenguaje) *EpiEstim*, la cual se construye alrededor del trabajo de Cori *et al.* [-@cori2013new]. Cori *et al.* asumieron que la tasa a la que una persona infectada contagia a otras sigue un proceso de Poisson. Enseguida utilizan un proceso de inferencia bayesiano en donde asumen un *prior* en la forma de una distribución Gamma, lo cual resulta en un *posterior* que también sigue una distribución Gamma.   Siguiendo la recomendación de Cori *et al.* solo calculamos *R<sub>t</sub>* cuando el número de casos es mayor a 12 infectados.  Finalmente, usando la investigación de Nishiura *et al.*[-@nishiura2020serial] asignamos una media de 4.0 y una desviación estándar de 4.6 al *prior* Gamma. Notando que la caracterización del intervalo serial varía ampliamente y posiblemente requiera valores que reflejen la dinámica del país [@griffin2020rapid]. 
+La estimación de *R<sub>t</sub>* que proporcionamos tiene la media y desviación estándar en ese momento.
+
+Nuestros resultados  toman en cuenta la transmisión pre-sintomática, *i.e.*, el periodo de incubación, o el tiempo que toma a un infectado comenzar a mostrar síntomas, es mayor al periodo latente, o el tiempo a partir del cual un infectado puede contagiar a otros. Siguiendo Bar-On *et al.*[-@bar2020science] asumimos que el periodo latente dura tres días y el  periodo de incubación cinco días.  
+
+Para cada estado se presentan dos gráficas con datos para los últimos 30 días. En una se muestra la incidencia de casos confirmados positivos, a la cual se le sobrepone el número estimado de casos positivos y la consideración sobre la diferencia entre la duración de los periodos de latencia y de incubación. La segunda gráfica muestra la evolución de *R<sub>t</sub>*. Una línea azul indica donde *R<sub>t</sub>* = 1. En ambos casos regiones grises delimitan la zona de incertidumbre.  
+
+
+Para la determinación de las zonas metropolitanas, seguimos la convención del INEGI [-@inegi2018delimitacion].
+
+
+
+
+## Términos y Condiciones 
+Términos y condiciones: Este reporte ha sido elaborado por “el autor” y se proporciona al público estrictamente para la salud pública, la educación, y la investigación académica. El reporte se basa en datos hechos públicos por la Secretaría de Salud de México y código que está disponible en el blog de información: https://tinyurl.com/nowcastRt. “El autor” declara que no ofrece garantías con respecto al reporte, incluida la precisión, la idoneidad para el uso, y la fiabilidad. Se prohíbe estrictamente confiar en el reporte para obtener orientación médica o usar el reporte para fines comerciales. También se prohíbe estrictamente el uso de este reporte, su información y la documentación puesta a disposición con fines promocionales o comerciales. Consulte la información oficial de la Secretaría de Salud de México en donde expertos ayudan a mejorar la comprensión del virus SARS-CoV-2, informar al público, formular políticas para guiar una respuesta, mejorar la atención y salvar vidas.
+
+
+## Mayor Información:
+Joaquín Salas. Instituto Politécnico Nacional. Cerro Blanco 141, Colinas del Cimatario, Querétaro, CP 76090, México. salas@ieee.org, jsalasr@ipn.mx
+La idea del método aquí presentado fue sugerida por Carlo Tomasi, profesor de la Univesidad de Duke. 
+
+
+# References
+```{r terms}
+

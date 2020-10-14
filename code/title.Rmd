@@ -1,0 +1,33 @@
+---
+title: "Número Efectivo de Reproducción para COVID-19 en México"
+output:
+  html_fragment
+bibliography: ref.bib
+---
+
+# *R<sub>t</sub>* para COVID-19 en Mexico
+
+ 
+
+```{r setup, echo=FALSE}
+
+
+#################
+# If you run this, make sure you insert accents in the html
+#
+
+#directorios de trabajo
+code.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/code/'
+setwd(code.dir)
+
+
+#knitr::opts_chunk$set(echo = FALSE, fig.width=3, fig.height=2)
+htmltools::img(src = knitr::image_uri("ipn-small.jpg"), 
+               alt = 'logo', 
+               style = 'position:absolute; top:0; right:0; padding:5px; width: 50px; height: 71px') # Added width and height as CSS
+
+```
+
+```{r epidemiology}
+
+ 
