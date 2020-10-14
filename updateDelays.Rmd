@@ -21,7 +21,7 @@ Este programa extrae los datos positivos de los  datos de la Secretaría de Salu
 
 
 #directorios de trabajo
-code.dir = 'E:/Documents/informs/research/2020.07.26 nowcastingRt/code/'
+code.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/code/'
 setwd(code.dir)
 common.data = 'E:\\Documents\\informs\\research\\covid-common\\'
 
