@@ -1,9 +1,7 @@
 
 #state, state number 
 #covid.pos, dataset with confirmed positives
-computeRt <- function(state, covid.pos) {
-  
-  
+computeRtMetro <- function(ciudades, zona.metro, covid.pos) {
   
   RtNow <- data.frame(Date=as.Date(character()),
                       R= as.numeric(), 
@@ -13,23 +11,35 @@ computeRt <- function(state, covid.pos) {
   
   
   time.back = 30
-  if (state == 0) {
-    nombre = "MEXICO"
-    prefix = "MX"
-    confirmed.state = covid.pos
+  
+ 
     
-  } else {
     #extract the state name
-    nombre = estados$ENTIDAD_FEDERATIVA[estados$CLAVE_ENTIDAD == state]
+    
+    nombre = ciudades[1,"NOM_ZM"] #extract the first name
     
     #print(droplevels(nombre))
     #extract the state name
-    prefix = estados$ABREVIATURA[estados$CLAVE_ENTIDAD == state]
+    prefix = str_pad(zona.metro,5,pad="0")
     #print(droplevels(nombre))
     #confirmados 
-    confirmed.state = covid.pos[covid.pos$ENTIDAD_RES ==  state,]
+    for (i in seq(1, dim(ciudades)[1])) {
+      clave.entidad = ciudades[i,"CVE_ENT"]
+      cadena = ciudades[i, "CVE_MUN"]
+      #extract the last three characters of the string
+      clave.municipio = substr(cadena, nchar(cadena)-2, nchar(cadena))
+      covid.pos.ciudad = covid[covid$RESULTADO==1 & 
+                                 covid$ENTIDAD_RES==clave.entidad & 
+                                 covid$MUNICIPIO_RES == as.numeric(clave.municipio),]
+      if (i == 1) {
+        confirmed.state = covid.pos.ciudad
+      } else {
+        confirmed.state = rbind(confirmed.state,covid.pos.ciudad)
+      }
+    }
     
-  }
+    
+  
   
   
   
@@ -52,7 +62,7 @@ computeRt <- function(state, covid.pos) {
     suppressWarnings(suppressMessages(print(plot(i) + 
                                               geom_line(data=band, 
                                                         color= "red", 
-                                                        linetype = "twodash",size=0.25,
+                                                        linetype = "dashed",size = 0.25,
                                                         aes(x=as.Date(fecha), 
                                                             y=mean))+
                                               ylab("Incidencia Diaria")+ xlab("")+
@@ -225,6 +235,7 @@ computeRt <- function(state, covid.pos) {
     estimate = data.frame(Rt = Rt.mu, sd = Rt.sd, fecha = fecha)
     
     #estimate = data.frame(Rt = Rt.mu, sd = Rt.sd, i0.05= Rt.05, i0.25 = Rt.25, i0.75=Rt.75, i0.95=Rt.95,  fecha = fecha)
+    print(as.character(nombre))
     options(digits = 3)
     print(estimate, row.names = FALSE)
     #write.csv(RtNow, "../data/RtNow.csv")

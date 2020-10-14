@@ -6,7 +6,7 @@ suppressMessages(library(tidyverse)) #stringr
 
 
 
-updateDelays <- function (prefix) { 
+updateDelaysMetro <- function (zona.metro) { 
   
   
   #directorios de trabajo
@@ -25,17 +25,24 @@ updateDelays <- function (prefix) {
   
   
   #archivos auxiliares para leer datos
-  filename = paste(common.data, "estados.csv", sep = "")
-  estados = read.csv(filename)
-  
-  
-  clave.entidad = estados$CLAVE_ENTIDAD[(estados$ABREVIATURA %in% prefix)]
+  filename = paste(common.data, "zonas_metropolitanas_2015.csv", sep = "")
+  zonas.metro.data = read.csv(filename)
   
   #extract the state name
-  nombre = estados$ENTIDAD_FEDERATIVA[estados$CLAVE_ENTIDAD == clave.entidad]
-  #print(droplevels(nombre))
+  prefix = str_pad(zona.metro,5,pad="0")
+  
+  
+  
+  #clave.entidad = estados$CLAVE_ENTIDAD[(estados$ABREVIATURA %in% prefix)]
+  
+  #extract the metropolitan zone name
+  ciudades = zonas.metro.data[zonas.metro.data$CVE_ZM %in% zona.metro,]
+  nombre = ciudades[1,"NOM_ZM"] #extract the first name
+
+  print(droplevels(nombre))
   
   #clave.entidad = estados$CLAVE[(estados$ENTIDAD_FEDERATIVA %in% nombre)]
+  
   
   
   #files in the data.dir directory corresponding to the Health Ministery data
@@ -96,8 +103,20 @@ updateDelays <- function (prefix) {
           #filter in the positives
           covid.pos = covid[covid$RESULTADO==1,]
         } else {
-          #filter in the positives
-          covid.pos = covid[covid$RESULTADO==1 & covid$ENTIDAD_RES==clave.entidad,]
+          for (i in seq(1, dim(ciudades)[1])) {
+            clave.entidad = ciudades[i,"CVE_ENT"]
+            cadena = ciudades[i, "CVE_MUN"]
+            #extract the last three characters of the string
+            clave.municipio = substr(cadena, nchar(cadena)-2, nchar(cadena))
+            covid.pos.ciudad = covid[covid$RESULTADO==1 & 
+                                       covid$ENTIDAD_RES==clave.entidad & 
+                                       covid$MUNICIPIO_RES == as.numeric(clave.municipio),]
+            if (i == 1) {
+              covid.pos = covid.pos.ciudad
+            } else {
+              covid.pos = rbind(covid.pos,covid.pos.ciudad)
+            }
+          }
         }
         #initially the dates will have zero cases
         count = matrix(0, nrow=num.dates, ncol=1)
@@ -184,11 +203,22 @@ updateDelays <- function (prefix) {
         #filter in the positives
         covid.pos = covid[covid$RESULTADO==1,]
       } else {
-        #filter in the positives
-        covid.pos = covid[covid$RESULTADO==1 & covid$ENTIDAD_RES==clave.entidad,]
         
-        
-        
+        #extract the records for the metropolitan area
+        for (i in seq(1, dim(ciudades)[1])) {
+          clave.entidad = ciudades[i,"CVE_ENT"]
+          cadena = ciudades[i, "CVE_MUN"]
+          #extract the last three characters of the string
+          clave.municipio = substr(cadena, nchar(cadena)-2, nchar(cadena))
+          covid.pos.ciudad = covid[covid$RESULTADO==1 & 
+                                     covid$ENTIDAD_RES==clave.entidad & 
+                                     covid$MUNICIPIO_RES == as.numeric(clave.municipio),]
+          if (i == 1) {
+            covid.pos = covid.pos.ciudad
+          } else {
+            covid.pos = rbind(covid.pos,covid.pos.ciudad)
+          }
+        }
         
       }
       

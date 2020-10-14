@@ -44,6 +44,11 @@ readData <- function (filename) {
     #"PAIS_ORIGEN"          
   )
   
+  resultado = data$CLASIFICACION_FINAL == 1 | data$CLASIFICACION_FINAL == 2 | data$CLASIFICACION_FINAL == 3
+  resultado <- as.numeric(resultado)
+  res.column = data.frame(RESULTADO = resultado)
+  data = cbind(data, res.column)
+  
   no.factors = c( "FECHA_SINTOMAS")
   factors = keep[!(keep %in% no.factors)]
   
