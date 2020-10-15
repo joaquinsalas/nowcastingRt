@@ -102,7 +102,7 @@ zonas.metro = unique(zonas.metro.data$CVE_ZM)
 
 files.zip = ""
 i = 1
-for (zona.metro in zonas.metro[1]) {  
+for (zona.metro in zonas.metro) {  
  
 #for (state in seq(1 ,32)) { #seq(1,32)) {
 #   nombre = estados$ENTIDAD_FEDERATIVA[estados$CLAVE_ENTIDAD == state]

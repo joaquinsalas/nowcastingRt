@@ -3,8 +3,8 @@
 #within a few weeks, we may be able to compare with more mature estimates.
 
 
-updateErrorEvaluation<-function (state, estimate.data) {
-  data.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/data/error/'
+updateErrorEvaluation<-function (state, estimate.data, data.dir) {
+  #data.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/data/error/'
   
   if (state == 0) {
     prefix = "MX"
