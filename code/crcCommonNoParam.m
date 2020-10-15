@@ -133,8 +133,8 @@ classdef crcCommonNoParam
                     c_theta(1,:) = header;
                     c_theta(2:size(theta,1)+1,:) = num2cell(theta);
                     
-                    filename = sprintf('../data/GammaParam%s.csv', prefix);
-                    csvwrite(filename, theta);
+                    %filename = sprintf('../data/GammaParam%s.csv', prefix);
+                    %csvwrite(filename, theta);
                     filename = sprintf('../data/NoParam%s.mat', prefix);
                     %filename = sprintf('../data/domain%s.csv', prefix);
                     %csvwrite(filename, Domain);

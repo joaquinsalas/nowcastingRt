@@ -32,14 +32,14 @@ suppressMessages(library(zip))
 
 
 #directorios de trabajo
-code.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/code/'
+code.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/code/'
 setwd(code.dir)
-data.dir = 'E:/Documents/informs/research/2020.09.20 Rt Web/data/'
+data.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/data/'
 
 
 #directorios con datos o codigo comunes
 common.data.dir = 'E:\\Documents\\informs\\research\\covid-common\\data\\'
-common.data = 'E:\\Documents\\informs\\research\\covid-common\\'
+#common.data = 'E:\\Documents\\informs\\research\\covid-common\\'
 
 filename = paste(code.dir, "readData.R", sep = "")
 source(filename)
@@ -81,7 +81,7 @@ covid.pos = covid[covid$RESULTADO==1,]
 #############
 #read the list of states
 
-filename = paste(common.data, "estados.csv", sep = "")
+filename = paste(data.dir, "estados.csv", sep = "")
 estados = read.csv(filename)
 
 
@@ -102,7 +102,7 @@ zonas.metro = unique(zonas.metro.data$CVE_ZM)
 
 files.zip = ""
 i = 1
-for (zona.metro in zonas.metro) {  
+for (zona.metro in zonas.metro[1]) {  
  
 #for (state in seq(1 ,32)) { #seq(1,32)) {
 #   nombre = estados$ENTIDAD_FEDERATIVA[estados$CLAVE_ENTIDAD == state]
