@@ -53,7 +53,7 @@ for (state in seq(1,32)) {
    #extract the state name
   prefix = estados$ABREVIATURA[estados$CLAVE_ENTIDAD == state]
   
-  print(droplevels(prefix))
+  print(prefix)
   updateDelays(prefix, code.dir, data.dir, common.data.dir)
 }
 

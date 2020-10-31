@@ -109,8 +109,8 @@ computeRt <- function(state, covid.pos) {
       #sigma = 1.5
       
       #nishiura et al. (2020)
-      mu = 4.0
-      sigma = 4.6
+      mu = 5.75 #4.0
+      sigma = 3.87 #4.6
       res_parametric_si <- suppressWarnings(suppressMessages(estimate_R(incid, 
                                                                         method="parametric_si",
                                                                         config = make_config(list(

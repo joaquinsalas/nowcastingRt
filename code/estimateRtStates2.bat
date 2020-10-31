@@ -1,2 +1,2 @@
-"C:/Program Files/R/R-3.6.3/bin/Rscript.exe" -e "rmarkdown::render('E:/Documents/informs/research/2020.10.14 github nowcasting/code/states.Rmd')"
+"C:/Program Files/R/R-4.0.3/bin/Rscript.exe" -e "rmarkdown::render('C:/Users/PC/Documents/informs/research/nowcastingRt/code/states.Rmd')"
 

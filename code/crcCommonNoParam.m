@@ -277,7 +277,7 @@ classdef crcCommonNoParam
 %                             rho(i) = rho_h(pos);
 %                         end
 %                         
-                        Q(n,:) = floor(c * (1 + rho));
+                        Q(n,:) = sort(floor(c * (1 + rho)));
                         n = n + 1;
                     end
                 else

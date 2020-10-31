@@ -27,16 +27,16 @@ suppressMessages(library(zip))
 
 
 #directorios de trabajo
-code.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/code/'
+code.dir = 'C:/Users/PC/Documents/informs/research/nowcastingRt/code/'
 setwd(code.dir)
-data.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/data/'
-data.error.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/data/error/'
+data.dir = 'C:/Users/PC/Documents/informs/research/nowcastingRt/data/'
+data.error.dir = 'C:/Users/PC/Documents/informs/research/nowcastingRt/data/error/'
 
 
 #directorios con datos o codigo comunes
-common.data.dir = 'E:\\Documents\\informs\\research\\covid-common\\data\\'
+common.data.dir = 'C:\\Users\\PC\\Documents\\informs\\research\\covid-common\\data\\'
 
-common.data = 'E:\\Documents\\informs\\research\\covid-common\\'
+common.data = 'C:\\Users\\PC\\Documents\\informs\\research\\covid-common\\'
 
 filename = paste(code.dir, "readData.R", sep = "")
 source(filename)
