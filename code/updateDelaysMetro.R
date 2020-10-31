@@ -10,8 +10,6 @@ updateDelaysMetro <- function (zona.metro, code.dir, data.dir, common.data.dir) 
   
   
 
-  #directorios con datos o codigo comunes
-  common.data = 'E:\\Documents\\informs\\research\\covid-common\\'
   
   
   #archivos auxiliares para leer datos
@@ -34,7 +32,7 @@ updateDelaysMetro <- function (zona.metro, code.dir, data.dir, common.data.dir) 
   ciudades = zonas.metro.data[zonas.metro.data$CVE_ZM %in% zona.metro,]
   nombre = ciudades[1,"NOM_ZM"] #extract the first name
 
-  print(droplevels(nombre))
+  #print(droplevels(nombre))
   
   #clave.entidad = estados$CLAVE[(estados$ENTIDAD_FEDERATIVA %in% nombre)]
   

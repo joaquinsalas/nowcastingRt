@@ -21,12 +21,12 @@ Este programa extrae los datos positivos de los  datos de la Secretaría de Salu
 
 
 #directorios de trabajo
-code.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/code/'
-data.dir = 'E:/Documents/informs/research/2020.10.14 github nowcasting/data/'
+code.dir = 'C:/Users/PC/Documents/informs/research/nowcastingRt/code/'
+data.dir = 'C:/Users/PC/Documents/informs/research/nowcastingRt/data/'
 setwd(code.dir)
 
 #directorios con datos o codigo comunes
-common.data.dir = 'E:\\Documents\\informs\\research\\covid-common\\data\\'
+common.data.dir = 'C:\\Users\\PC\\Documents\\informs\\research\\covid-common\\data\\'
  
 
 
